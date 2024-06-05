@@ -7,7 +7,7 @@ def migrate_flat_to_owner(apps, schema_editor):
     Flat = apps.get_model('property', 'Flat')
     Owner = apps.get_model('property', 'Owner')
 
-    for flat in Flat.objects.all():
+    for flat in Flat.objects.iterator():
         owner, created = Owner.objects.get_or_create(
             holder=flat.owner,
             pure_phone=flat.owner_pure_phone,

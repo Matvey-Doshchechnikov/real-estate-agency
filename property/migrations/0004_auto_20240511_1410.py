@@ -6,12 +6,9 @@ from property.models import Flat
 
 
 def auto_flat_construction_year(apps, schema_editor):
-    for flat in Flat.objects.all():
-        if flat.construction_year >= 2015:
-            flat.new_building = True
-        else:
-            flat.new_building = False
-        flat.save()
+    Flat = apps.get_model('property', 'Flat')
+    Flat.objects.filter(construction_year__gte=2015).update(new_building=True)
+    Flat.objects.filter(construction_year__lt=2015).update(new_building=False)
 
 
 class Migration(migrations.Migration):
